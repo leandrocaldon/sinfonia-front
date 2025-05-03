@@ -12,7 +12,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/auth/register', { name, email, password, isAdmin });
+      await axios.post('/auth/register', { name, email, password, isAdmin });
       setSuccess('Registro exitoso, ahora puedes iniciar sesión');
       setError('');
     } catch (err) {

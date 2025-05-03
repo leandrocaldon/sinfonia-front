@@ -14,7 +14,7 @@ export default function Contact() {
     e.preventDefault();
     setError('');
     try {
-      await axios.post('/api/contact', form);
+      await axios.post('/contact', form);
       setSent(true);
     } catch (err) {
       setError('Error al enviar el mensaje. Intenta de nuevo.');
