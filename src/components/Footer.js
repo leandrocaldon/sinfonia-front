@@ -23,7 +23,7 @@ export default function Footer() {
             rel="noopener noreferrer" 
             className="hover:text-yellow-300 transition-colors transform hover:scale-110 duration-200"
           >
-            <FontAwesomeIcon icon={faInstagram} style={{color: "#cd35d0"}} className="text-xl" />
+            <FontAwesomeIcon icon={faInstagram} style={{color: "#cd35d0"}} className="text-3xl" />
           </a>
           <a 
             href="https://www.facebook.com/" 
@@ -31,13 +31,13 @@ export default function Footer() {
             rel="noopener noreferrer" 
             className="hover:text-yellow-300 transition-colors transform hover:scale-110 duration-200"
           >
-            <FontAwesomeIcon icon={faFacebook} style={{color: "#74C0FC"}} className="text-xl" />
+            <FontAwesomeIcon icon={faFacebook} style={{color: "#74C0FC"}} className="text-3xl" />
           </a>
           <a 
             href="mailto:info@sinfonia.coffee" 
             className="hover:text-yellow-300 transition-colors transform hover:scale-110 duration-200"
           >
-            <FontAwesomeIcon icon={faEnvelope} style={{color: "#e24822"}} className="text-xl" />
+            <FontAwesomeIcon icon={faEnvelope} style={{color: "#e24822"}} className="text-3xl" />
           </a>
         </div>
       </div>
@@ -65,7 +65,7 @@ export default function Footer() {
               rel="noopener noreferrer" 
               className="hover:text-yellow-300 transition-colors transform hover:scale-110 duration-200"
             >
-              <FontAwesomeIcon icon={faInstagram} style={{color: "#cd35d0"}} className="text-2xl" />
+              <FontAwesomeIcon icon={faInstagram} style={{color: "#cd35d0"}} className="text-3xl" />
             </a>
             <a 
               href="https://www.facebook.com/" 
@@ -73,13 +73,13 @@ export default function Footer() {
               rel="noopener noreferrer" 
               className="hover:text-yellow-300 transition-colors transform hover:scale-110 duration-200"
             >
-              <FontAwesomeIcon icon={faFacebook} style={{color: "#74C0FC"}} className="text-2xl" />
+              <FontAwesomeIcon icon={faFacebook} style={{color: "#74C0FC"}} className="text-3xl" />
             </a>
             <a 
               href="mailto:info@sinfonia.coffee" 
               className="hover:text-yellow-300 transition-colors transform hover:scale-110 duration-200"
             >
-              <FontAwesomeIcon icon={faEnvelope} style={{color: "#e24822"}} className="text-2xl" />
+              <FontAwesomeIcon icon={faEnvelope} style={{color: "#e24822"}} className="text-3xl" />
             </a>
           </div>
         </div>

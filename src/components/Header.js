@@ -7,12 +7,31 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 700);
   const [animateMenu, setAnimateMenu] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 700);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Control de visibilidad del header al hacer scroll
+  useEffect(() => {
+    const controlNavbar = () => {
+      if (window.scrollY > lastScrollY && window.scrollY > 100) { // Ocultar al hacer scroll hacia abajo y después de 100px
+        setVisible(false);
+      } else { // Mostrar al hacer scroll hacia arriba
+        setVisible(true);
+      }
+      setLastScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', controlNavbar);
+    return () => {
+      window.removeEventListener('scroll', controlNavbar);
+    };
+  }, [lastScrollY]);
 
   // Animación para el menú lateral
   useEffect(() => {
@@ -36,7 +55,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-[#7b3f00] text-white shadow-md sticky top-0 z-50 flex items-center justify-between min-h-[100px]">
+    <header className={`w-full bg-[#7b3f00] text-white shadow-md sticky top-0 z-50 flex items-center justify-between min-h-[100px] transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'}`}>
       <div className="flex items-center gap-4">
         <span 
           onClick={()=>navigate('/')} 
