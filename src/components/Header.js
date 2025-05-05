@@ -36,86 +36,59 @@ export default function Header() {
   };
 
   return (
-    <header style={{
-      width: '100%',
-      background: '#7b3f00',
-      color: '#fff',
-      boxShadow: '0 2px 12px #e2c9a0',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      minHeight: 64,
-      position: 'sticky',
-      top: 0,
-      zIndex: 100
-    }}>
-      <div style={{display:'flex',alignItems:'center',gap:16}}>
-        <span onClick={()=>navigate('/')} style={{cursor:'pointer',fontWeight:700,fontSize:24,letterSpacing:1,marginLeft:24,fontFamily:'serif'}}>☕ Sinfonia Coffee</span>
+    <header className="w-full bg-[#7b3f00] text-white shadow-md sticky top-0 z-50 flex items-center justify-between min-h-[64px]">
+      <div className="flex items-center gap-4">
+        <span 
+          onClick={()=>navigate('/')} 
+          className="cursor-pointer font-bold text-2xl tracking-wide ml-6 font-serif"
+        >
+          ☕ Sinfonia Coffee
+        </span>
       </div>
-      <nav className="header-nav" style={{marginRight:24,display:'flex',alignItems:'center',gap:18}}>
+      <nav className="mr-6 flex items-center gap-4">
         {/* Desktop menu */}
-        <div className="header-desktop-menu" style={{display: isMobile ? 'none' : 'flex', alignItems:'center', gap:18}}>
-          <button onClick={()=>navigate('/')} style={navBtnStyle}>Inicio</button>
-          <button onClick={()=>navigate('/')} style={navBtnStyle}>Productos</button>
-          <button onClick={()=>navigate('/contact')} style={navBtnStyle}>Contacto</button>
+        <div className={`items-center gap-4 ${isMobile ? 'hidden' : 'flex'}`}>
+          <button onClick={()=>navigate('/')} className="bg-transparent text-white border-none rounded-md py-2 px-4 font-semibold cursor-pointer text-base hover:bg-white/10">Inicio</button>
+          <button onClick={()=>navigate('/')} className="bg-transparent text-white border-none rounded-md py-2 px-4 font-semibold cursor-pointer text-base hover:bg-white/10">Productos</button>
+          <button onClick={()=>navigate('/contact')} className="bg-transparent text-white border-none rounded-md py-2 px-4 font-semibold cursor-pointer text-base hover:bg-white/10">Contacto</button>
           {user && user.isAdmin && (
-            <button onClick={()=>navigate('/admin/contact-messages')} style={navBtnStyle}>Mensajes</button>
+            <button onClick={()=>navigate('/admin/contact-messages')} className="bg-transparent text-white border-none rounded-md py-2 px-4 font-semibold cursor-pointer text-base hover:bg-white/10">Mensajes</button>
           )}
-          {!user && <button onClick={()=>navigate('/login')} style={btnStyle}>Login</button>}
-          {!user && <button onClick={()=>navigate('/register')} style={btnStyle}>Registro</button>}
-          {user && <span style={{fontWeight:500,fontSize:15,marginRight:10}}>Hola, {user.name}{user.isAdmin && ' (admin)'}</span>}
-          {user && <button onClick={handleLogout} style={btnStyle}>Logout</button>}
+          {!user && <button onClick={()=>navigate('/login')} className="bg-white text-[#7b3f00] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Login</button>}
+          {!user && <button onClick={()=>navigate('/register')} className="bg-white text-[#7b3f00] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Registro</button>}
+          {user && <span className="font-medium text-sm mr-2">Hola, {user.name}{user.isAdmin && ' (admin)'}</span>}
+          {user && <button onClick={handleLogout} className="bg-white text-[#7b3f00] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Logout</button>}
         </div>
         {/* Menú hamburguesa para móviles */}
-        <button className="burger" onClick={()=>setMenuOpen(!menuOpen)} style={{background:'none',border:'none',display: isMobile ? 'block' : 'none',cursor:'pointer',marginLeft:10}}>
-          <span style={{fontSize:32, color:'#fff'}}>&#9776;</span>
+        <button 
+          className={`bg-transparent border-none cursor-pointer ml-2 ${isMobile ? 'block' : 'hidden'}`}
+          onClick={()=>setMenuOpen(!menuOpen)}
+        >
+          <span className="text-3xl text-white">&#9776;</span>
         </button>
         {/* Menú lateral móvil con animación y enlaces */}
         {(menuOpen || animateMenu) && isMobile && (
-          <div style={{
-            position:'fixed',
-            top:0,
-            right:0,
-            width:240,
-            height:'100vh',
-            background:'#fff',
-            boxShadow:'-2px 0 12px #e2c9a0',
-            zIndex:999,
-            display:'flex',
-            flexDirection:'column',
-            alignItems:'flex-start',
-            padding:24,
-            transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
-            transition:'transform 0.35s cubic-bezier(.68,-0.55,.27,1.55)',
-          }}>
-            <button onClick={()=>setMenuOpen(false)} style={{alignSelf:'flex-end',background:'none',border:'none',fontSize:28,cursor:'pointer',color:'#7b3f00'}}>×</button>
-            <button onClick={()=>handleNav('/')} style={sideNavBtnStyle}>Inicio</button>
-            <button onClick={()=>handleNav('/')} style={sideNavBtnStyle}>Productos</button>
-            <button onClick={()=>handleNav('/contact')} style={sideNavBtnStyle}>Contacto</button>
+          <div className={`fixed top-0 right-0 w-60 h-screen bg-white shadow-lg z-50 flex flex-col items-start p-6 transition-transform duration-350 ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+            <button 
+              onClick={()=>setMenuOpen(false)} 
+              className="self-end bg-transparent border-none text-3xl cursor-pointer text-[#7b3f00]"
+            >
+              ×
+            </button>
+            <button onClick={()=>handleNav('/')} className="bg-transparent text-[#7b3f00] border-none rounded-md py-2 px-5 font-bold cursor-pointer my-1 w-full text-left text-lg hover:bg-gray-100">Inicio</button>
+            <button onClick={()=>handleNav('/')} className="bg-transparent text-[#7b3f00] border-none rounded-md py-2 px-5 font-bold cursor-pointer my-1 w-full text-left text-lg hover:bg-gray-100">Productos</button>
+            <button onClick={()=>handleNav('/contact')} className="bg-transparent text-[#7b3f00] border-none rounded-md py-2 px-5 font-bold cursor-pointer my-1 w-full text-left text-lg hover:bg-gray-100">Contacto</button>
             {user && user.isAdmin && (
-              <button onClick={()=>handleNav('/admin/contact-messages')} style={sideNavBtnStyle}>Mensajes</button>
+              <button onClick={()=>handleNav('/admin/contact-messages')} className="bg-transparent text-[#7b3f00] border-none rounded-md py-2 px-5 font-bold cursor-pointer my-1 w-full text-left text-lg hover:bg-gray-100">Mensajes</button>
             )}
-            <div style={{borderBottom:'1px solid #eee',width:'100%',margin:'10px 0'}}></div>
-            {!user && <button onClick={()=>handleNav('/login')} style={sideBtnStyle}>Login</button>}
-            {!user && <button onClick={()=>handleNav('/register')} style={sideBtnStyle}>Registro</button>}
-            {user && <span style={{fontWeight:500,fontSize:15,margin:'16px 0'}}>Hola, {user.name}{user.isAdmin && ' (admin)'}</span>}
-            {user && <button onClick={()=>{handleLogout();setMenuOpen(false);}} style={sideBtnStyle}>Logout</button>}
+            <div className="border-b border-gray-200 w-full my-2"></div>
+            {!user && <button onClick={()=>handleNav('/login')} className="bg-[#7b3f00] text-white border-none rounded-md py-2 px-5 font-semibold cursor-pointer my-2 w-full text-left hover:bg-[#6a3500]">Login</button>}
+            {!user && <button onClick={()=>handleNav('/register')} className="bg-[#7b3f00] text-white border-none rounded-md py-2 px-5 font-semibold cursor-pointer my-2 w-full text-left hover:bg-[#6a3500]">Registro</button>}
+            {user && <span className="font-medium text-sm my-4">Hola, {user.name}{user.isAdmin && ' (admin)'}</span>}
+            {user && <button onClick={()=>{handleLogout();setMenuOpen(false);}} className="bg-[#7b3f00] text-white border-none rounded-md py-2 px-5 font-semibold cursor-pointer my-2 w-full text-left hover:bg-[#6a3500]">Logout</button>}
           </div>
         )}
       </nav>
     </header>
   );
 }
-
-const btnStyle = {
-  background:'#fff',color:'#7b3f00',border:'none',borderRadius:6,padding:'8px 20px',fontWeight:600,cursor:'pointer'
-};
-const navBtnStyle = {
-  background:'none',color:'#fff',border:'none',borderRadius:6,padding:'8px 16px',fontWeight:600,cursor:'pointer',fontSize:16
-};
-const sideBtnStyle = {
-  background:'#7b3f00',color:'#fff',border:'none',borderRadius:6,padding:'10px 20px',fontWeight:600,cursor:'pointer',margin:'8px 0',width:'100%',textAlign:'left'
-};
-const sideNavBtnStyle = {
-  background:'none',color:'#7b3f00',border:'none',borderRadius:6,padding:'10px 20px',fontWeight:700,cursor:'pointer',margin:'4px 0',width:'100%',textAlign:'left',fontSize:17
-};
