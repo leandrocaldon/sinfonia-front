@@ -18,7 +18,7 @@ export default function Footer() {
         </div>
         <div className="flex gap-6">
           <a 
-            href="https://www.instagram.com/" 
+            href="https://www.instagram.com/sinfonia_coffe?igsh=MWN0dXlvdmJpb2k0OA%3D%3D&utm_source=qr" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="hover:text-yellow-300 transition-colors transform hover:scale-110 duration-200"
