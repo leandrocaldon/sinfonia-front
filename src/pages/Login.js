@@ -41,7 +41,7 @@ export default function Login() {
           />
           <button 
             type="submit" 
-            className="py-3 bg-[#7b3f00] text-white border-none rounded-md font-bold text-base cursor-pointer hover:bg-[#6a3500] transition-colors"
+            className="py-3 bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md font-bold text-base cursor-pointer hover:bg-[#6a3500] transition-colors"
           >
             Entrar
           </button>
