@@ -10,19 +10,21 @@ import AdminContactMessages from './pages/AdminContactMessages';
 
 function App() {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Router>
         <Header />
-        <Routes>
-          <Route path="/" element={<Products />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/admin/contact-messages" element={<AdminContactMessages />} />
-        </Routes>
+        <div className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Products />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/admin/contact-messages" element={<AdminContactMessages />} />
+          </Routes>
+        </div>
       </Router>
       <Footer />
-    </>
+    </div>
   );
 }
 
