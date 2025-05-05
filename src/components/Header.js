@@ -55,13 +55,13 @@ export default function Header() {
   };
 
   return (
-    <header className={`w-full bg-[#7b3f00] text-white shadow-md sticky top-0 z-50 flex items-center justify-between min-h-[100px] transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'}`}>
+    <header className={`w-full bg-gradient-to-r from-purple-500 to-purple-900 text-white shadow-md sticky top-0 z-50 flex items-center justify-between min-h-[100px] transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'}`}>
       <div className="flex items-center gap-4">
         <span 
           onClick={()=>navigate('/')} 
           className="cursor-pointer font-bold text-2xl tracking-wide ml-6 font-serif"
         >
-          ☕ Sinfonia Coffee
+          ☕ Sinfonía Coffee
         </span>
       </div>
       <nav className="mr-6 flex items-center gap-4">
