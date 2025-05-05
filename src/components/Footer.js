@@ -6,8 +6,8 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 export default function Footer() {
   return (
     <footer className="w-full bg-[#7b3f00] text-white py-6 mt-12">
-      {/* Versión móvil - Apilada verticalmente */}
-      <div className="md:hidden container mx-auto px-4 flex flex-col items-center gap-4">
+      {/* Versión móvil y tablet pequeña - Apilada verticalmente */}
+      <div className="lg:hidden container mx-auto px-4 flex flex-col items-center gap-4 py-2">
         <div>
           <span className="cursor-pointer font-bold text-xl tracking-wide font-serif">☕ Sinfonia Coffee</span>
         </div>
@@ -43,7 +43,7 @@ export default function Footer() {
       </div>
       
       {/* Versión escritorio - Con posicionamiento relativo/absoluto */}
-      <div className="hidden md:block relative container mx-auto px-4 py-2">
+      <div className="hidden lg:block relative container mx-auto px-4 py-4">
         {/* Texto central */}
         <div className="text-center">
           <span className="text-base text-gray-200">
