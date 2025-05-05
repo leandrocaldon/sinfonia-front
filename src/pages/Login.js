@@ -19,16 +19,35 @@ export default function Login() {
   };
 
   return (
-    <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'80vh',background:'#f4f4f4'}}>
-      <div style={{background:'#fff',padding:36,borderRadius:12,boxShadow:'0 2px 16px #ddd',minWidth:340}}>
-        <h2 style={{textAlign:'center',marginBottom:24}}>Iniciar Sesión</h2>
-        <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:16}}>
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required style={{padding:10,borderRadius:6,border:'1px solid #ccc'}} />
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Contraseña" required style={{padding:10,borderRadius:6,border:'1px solid #ccc'}} />
-          <button type="submit" style={{padding:12,background:'#7b3f00',color:'#fff',border:'none',borderRadius:6,fontWeight:'bold',fontSize:16,cursor:'pointer'}}>Entrar</button>
-          {error && <p style={{color:'red',textAlign:'center'}}>{error}</p>}
+    <div className="flex justify-center items-center h-[80vh] bg-gray-100">
+      <div className="bg-white p-9 rounded-xl shadow-md min-w-[340px]">
+        <h2 className="text-center mb-6 text-xl font-bold">Iniciar Sesión</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input 
+            type="email" 
+            value={email} 
+            onChange={e => setEmail(e.target.value)} 
+            placeholder="Email" 
+            required 
+            className="p-2.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+          />
+          <input 
+            type="password" 
+            value={password} 
+            onChange={e => setPassword(e.target.value)} 
+            placeholder="Contraseña" 
+            required 
+            className="p-2.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+          />
+          <button 
+            type="submit" 
+            className="py-3 bg-[#7b3f00] text-white border-none rounded-md font-bold text-base cursor-pointer hover:bg-[#6a3500] transition-colors"
+          >
+            Entrar
+          </button>
+          {error && <p className="text-red-500 text-center">{error}</p>}
         </form>
-        <div style={{marginTop:18, fontSize:13, color:'#888',textAlign:'center'}}>
+        <div className="mt-4.5 text-sm text-gray-500 text-center">
           Si eres administrador, inicia sesión con tu cuenta de administrador.<br />
           Si eres usuario normal, inicia sesión con tu cuenta de usuario.
         </div>

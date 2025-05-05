@@ -22,20 +22,49 @@ export default function Contact() {
   };
 
   return (
-    <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'80vh',background:'#f4f4f4'}}>
-      <div style={{background:'#fff',padding:36,borderRadius:12,boxShadow:'0 2px 16px #ddd',minWidth:340, width:380}}>
-        <h2 style={{textAlign:'center',marginBottom:24}}>Contacto</h2>
+    <div className="flex justify-center items-center h-[80vh] bg-gray-100">
+      <div className="bg-white p-9 rounded-xl shadow-md min-w-[340px] w-[380px]">
+        <h2 className="text-center mb-6 text-xl font-bold">Contacto</h2>
         {sent ? (
-          <div style={{textAlign:'center',color:'#228B22',fontWeight:600}}>
+          <div className="text-center text-green-700 font-semibold">
             ¡Gracias por contactarnos!<br />Te responderemos pronto.
           </div>
         ) : (
-        <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:16}}>
-          <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Tu nombre" required style={{padding:10,borderRadius:6,border:'1px solid #ccc'}} />
-          <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="Tu email" required style={{padding:10,borderRadius:6,border:'1px solid #ccc'}} />
-          <textarea name="message" value={form.message} onChange={handleChange} placeholder="Tu mensaje" rows={4} required style={{padding:10,borderRadius:6,border:'1px solid #ccc',resize:'vertical'}} />
-          <button type="submit" style={{padding:12,background:'#7b3f00',color:'#fff',border:'none',borderRadius:6,fontWeight:'bold',fontSize:16,cursor:'pointer'}}>Enviar</button>
-          {error && <p style={{color:'red',textAlign:'center'}}>{error}</p>}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input 
+            type="text" 
+            name="name" 
+            value={form.name} 
+            onChange={handleChange} 
+            placeholder="Tu nombre" 
+            required 
+            className="p-2.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+          />
+          <input 
+            type="email" 
+            name="email" 
+            value={form.email} 
+            onChange={handleChange} 
+            placeholder="Tu email" 
+            required 
+            className="p-2.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+          />
+          <textarea 
+            name="message" 
+            value={form.message} 
+            onChange={handleChange} 
+            placeholder="Tu mensaje" 
+            rows={4} 
+            required 
+            className="p-2.5 rounded-md border border-gray-300 resize-vertical focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+          />
+          <button 
+            type="submit" 
+            className="py-3 bg-[#7b3f00] text-white border-none rounded-md font-bold text-base cursor-pointer hover:bg-[#6a3500] transition-colors"
+          >
+            Enviar
+          </button>
+          {error && <p className="text-red-500 text-center">{error}</p>}
         </form>
         )}
       </div>

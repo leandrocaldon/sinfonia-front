@@ -61,30 +61,93 @@ export default function Products() {
   };
 
   return (
-    <div style={{padding:24}}>
-      <div style={{display:'flex', marginBottom:24}}>
-        <button onClick={() => handleTab(TABS.USER)} style={{marginRight:8, fontWeight: tab===TABS.USER?'bold':'normal'}}>Productos</button>
-        {user?.isAdmin && <button onClick={() => handleTab(TABS.ADMIN)} style={{fontWeight: tab===TABS.ADMIN?'bold':'normal'}}>Administrar</button>}
+    <div className="p-6">
+      <div className="flex mb-6">
+        <button 
+          onClick={() => handleTab(TABS.USER)} 
+          className={`mr-2 ${tab === TABS.USER ? 'font-bold' : 'font-normal'} hover:text-[#7b3f00]`}
+        >
+          Productos
+        </button>
+        {user?.isAdmin && 
+          <button 
+            onClick={() => handleTab(TABS.ADMIN)} 
+            className={`${tab === TABS.ADMIN ? 'font-bold' : 'font-normal'} hover:text-[#7b3f00]`}
+          >
+            Administrar
+          </button>
+        }
       </div>
+      
       {tab === TABS.USER && (
-        <div style={{display:'flex', flexWrap:'wrap'}}>
+        <div className="flex flex-wrap">
           {products.map(prod => (
             <ProductCard key={prod._id} product={prod} isAdmin={false} />
           ))}
         </div>
       )}
+      
       {tab === TABS.ADMIN && user?.isAdmin && (
-        <div style={{marginTop:32, background:'#fff', borderRadius:12, boxShadow:'0 2px 16px #e2c9a0', padding:32, maxWidth:950}}>
-          <h2 style={{fontFamily:'serif',fontWeight:700,fontSize:32,marginBottom:24,color:'#7b3f00'}}>Administrar productos</h2>
-          <form onSubmit={handleFormSubmit} style={{display:'flex',gap:14,alignItems:'center',marginBottom:32,flexWrap:'wrap'}}>
-            <input type="text" name="name" value={form.name} onChange={handleFormChange} placeholder="Nombre" required style={{flex:'1 1 160px',padding:12,borderRadius:6,border:'1px solid #ccc',fontSize:16}} />
-            <input type="text" name="description" value={form.description} onChange={handleFormChange} placeholder="Descripción" required style={{flex:'2 1 260px',padding:12,borderRadius:6,border:'1px solid #ccc',fontSize:16}} />
-            <input type="number" name="price" value={form.price} onChange={handleFormChange} placeholder="Precio" required style={{flex:'0 1 100px',padding:12,borderRadius:6,border:'1px solid #ccc',fontSize:16}} />
-            <input type="text" name="image" value={form.image} onChange={handleFormChange} placeholder="URL Imagen" style={{flex:'2 1 240px',padding:12,borderRadius:6,border:'1px solid #ccc',fontSize:16}} />
-            <button type="submit" style={{padding:'12px 24px',background:'#7b3f00',color:'#fff',border:'none',borderRadius:6,fontWeight:'bold',fontSize:16,cursor:'pointer',height:48}}>{editing ? 'Actualizar' : 'Crear'}</button>
-            {editing && <button type="button" onClick={()=>{setEditing(null);setForm({name:'',description:'',price:'',image:''});}} style={{padding:'12px 18px',background:'#eee',color:'#7b3f00',border:'none',borderRadius:6,fontWeight:'bold',fontSize:16,cursor:'pointer',height:48}}>Cancelar</button>}
+        <div className="mt-8 bg-white rounded-xl shadow-lg shadow-[#e2c9a0]/50 p-8 max-w-[950px]">
+          <h2 className="font-serif font-bold text-3xl mb-6 text-[#7b3f00]">Administrar productos</h2>
+          
+          <form onSubmit={handleFormSubmit} className="flex gap-3.5 items-center mb-8 flex-wrap">
+            <input 
+              type="text" 
+              name="name" 
+              value={form.name} 
+              onChange={handleFormChange} 
+              placeholder="Nombre" 
+              required 
+              className="flex-1 basis-[160px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+            />
+            <input 
+              type="text" 
+              name="description" 
+              value={form.description} 
+              onChange={handleFormChange} 
+              placeholder="Descripción" 
+              required 
+              className="flex-2 basis-[260px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+            />
+            <input 
+              type="number" 
+              name="price" 
+              value={form.price} 
+              onChange={handleFormChange} 
+              placeholder="Precio" 
+              required 
+              className="flex-none basis-[100px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+            />
+            <input 
+              type="text" 
+              name="image" 
+              value={form.image} 
+              onChange={handleFormChange} 
+              placeholder="URL Imagen" 
+              className="flex-2 basis-[240px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+            />
+            <button 
+              type="submit" 
+              className="py-3 px-6 bg-[#7b3f00] text-white border-none rounded-md font-bold text-base cursor-pointer h-12 hover:bg-[#6a3500] transition-colors"
+            >
+              {editing ? 'Actualizar' : 'Crear'}
+            </button>
+            {editing && 
+              <button 
+                type="button" 
+                onClick={() => {
+                  setEditing(null);
+                  setForm({name:'',description:'',price:'',image:''});
+                }} 
+                className="py-3 px-4.5 bg-gray-200 text-[#7b3f00] border-none rounded-md font-bold text-base cursor-pointer h-12 hover:bg-gray-300 transition-colors"
+              >
+                Cancelar
+              </button>
+            }
           </form>
-          <div style={{display:'flex', flexWrap:'wrap'}}>
+          
+          <div className="flex flex-wrap">
             {products.map(prod => (
               <ProductCard key={prod._id} product={prod} isAdmin={true} onEdit={handleEdit} onDelete={handleDelete} />
             ))}

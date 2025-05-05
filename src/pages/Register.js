@@ -22,19 +22,51 @@ export default function Register() {
   };
 
   return (
-    <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'80vh',background:'#f4f4f4'}}>
-      <div style={{background:'#fff',padding:36,borderRadius:12,boxShadow:'0 2px 16px #ddd',minWidth:340}}>
-        <h2 style={{textAlign:'center',marginBottom:24}}>Registro</h2>
-        <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:16}}>
-          <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Nombre" required style={{padding:10,borderRadius:6,border:'1px solid #ccc'}} />
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required style={{padding:10,borderRadius:6,border:'1px solid #ccc'}} />
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Contraseña" required style={{padding:10,borderRadius:6,border:'1px solid #ccc'}} />
-          <label style={{display:'block',margin:'8px 0',fontSize:14}}>
-            <input type="checkbox" checked={isAdmin} onChange={e => setIsAdmin(e.target.checked)} style={{marginRight:8}}/> Registrar como administrador
+    <div className="flex justify-center items-center h-[80vh] bg-gray-100">
+      <div className="bg-white p-9 rounded-xl shadow-md min-w-[340px]">
+        <h2 className="text-center mb-6 text-xl font-bold">Registro</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input 
+            type="text" 
+            value={name} 
+            onChange={e => setName(e.target.value)} 
+            placeholder="Nombre" 
+            required 
+            className="p-2.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+          />
+          <input 
+            type="email" 
+            value={email} 
+            onChange={e => setEmail(e.target.value)} 
+            placeholder="Email" 
+            required 
+            className="p-2.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+          />
+          <input 
+            type="password" 
+            value={password} 
+            onChange={e => setPassword(e.target.value)} 
+            placeholder="Contraseña" 
+            required 
+            className="p-2.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+          />
+          <label className="block my-2 text-sm">
+            <input 
+              type="checkbox" 
+              checked={isAdmin} 
+              onChange={e => setIsAdmin(e.target.checked)} 
+              className="mr-2"
+            /> 
+            Registrar como administrador
           </label>
-          <button type="submit" style={{padding:12,background:'#7b3f00',color:'#fff',border:'none',borderRadius:6,fontWeight:'bold',fontSize:16,cursor:'pointer'}}>Registrar</button>
-          {error && <p style={{color:'red',textAlign:'center'}}>{error}</p>}
-          {success && <p style={{color:'green',textAlign:'center'}}>{success}</p>}
+          <button 
+            type="submit" 
+            className="py-3 bg-[#7b3f00] text-white border-none rounded-md font-bold text-base cursor-pointer hover:bg-[#6a3500] transition-colors"
+          >
+            Registrar
+          </button>
+          {error && <p className="text-red-500 text-center">{error}</p>}
+          {success && <p className="text-green-600 text-center">{success}</p>}
         </form>
       </div>
     </div>
