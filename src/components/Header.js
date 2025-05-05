@@ -36,7 +36,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-[#7b3f00] text-white shadow-md sticky top-0 z-50 flex items-center justify-between min-h-[64px]">
+    <header className="w-full bg-[#7b3f00] text-white shadow-md sticky top-0 z-50 flex items-center justify-between min-h-[100px]">
       <div className="flex items-center gap-4">
         <span 
           onClick={()=>navigate('/')} 
