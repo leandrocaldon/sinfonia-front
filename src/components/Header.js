@@ -73,10 +73,10 @@ export default function Header() {
           {user && user.isAdmin && (
             <button onClick={()=>navigate('/admin/contact-messages')} className="bg-transparent text-white border-none rounded-md py-2 px-4 font-semibold cursor-pointer text-base hover:bg-white/10">Mensajes</button>
           )}
-          {!user && <button onClick={()=>navigate('/login')} className="bg-white text-[#7b3f00] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Login</button>}
-          {!user && <button onClick={()=>navigate('/register')} className="bg-white text-[#7b3f00] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Registro</button>}
+          {!user && <button onClick={()=>navigate('/login')} className="bg-white text-[#7731c6] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Login</button>}
+          {!user && <button onClick={()=>navigate('/register')} className="bg-white text-[#7731c6] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Registro</button>}
           {user && <span className="font-medium text-sm mr-2">Hola, {user.name}{user.isAdmin && ' (admin)'}</span>}
-          {user && <button onClick={handleLogout} className="bg-white text-[#7b3f00] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Logout</button>}
+          {user && <button onClick={handleLogout} className="bg-white text-[#7731c6] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Logout</button>}
         </div>
         {/* Menú hamburguesa para móviles */}
         <button 
@@ -90,7 +90,7 @@ export default function Header() {
           <div className={`fixed top-0 right-0 w-60 h-screen bg-gradient-to-r from-purple-300 to-purple-400 shadow-lg z-50 flex flex-col items-start p-6 transition-transform duration-350 ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
             <button 
               onClick={()=>setMenuOpen(false)} 
-              className="self-end bg-transparent border-none text-3xl cursor-pointer text-[#7b3f00]"
+              className="self-end bg-transparent border-none text-3xl cursor-pointer text-white"
             >
               ×
             </button>

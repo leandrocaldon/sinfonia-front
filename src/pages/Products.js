@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axios';
 import ProductCard from '../components/ProductCard';
+import backgroundImage from '../assets/images/cup-coffee.jpg';
 
 const TABS = {
   USER: 'Productos',
@@ -61,99 +62,100 @@ export default function Products() {
   };
 
   return (
-    <div className="p-6">
-      <div className="flex mb-6">
-        <button 
-          onClick={() => handleTab(TABS.USER)} 
-          className={`mr-2 ${tab === TABS.USER ? 'font-bold' : 'font-normal'} hover:text-[#7b3f00]`}
-        >
-          Productos
-        </button>
-        {user?.isAdmin && 
-          <button 
-            onClick={() => handleTab(TABS.ADMIN)} 
-            className={`${tab === TABS.ADMIN ? 'font-bold' : 'font-normal'} hover:text-[#7b3f00]`}
-          >
-            Administrar
-          </button>
-        }
-      </div>
+    <div className="min-h-screen relative" style={{backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+      {/* Overlay para difuminar la imagen */}
+      <div className="absolute inset-0  bg-opacity-40 backdrop-blur-sm"></div>
       
-      {tab === TABS.USER && (
-        <div className="flex flex-wrap">
-          {products.map(prod => (
-            <ProductCard key={prod._id} product={prod} isAdmin={false} />
-          ))}
-        </div>
-      )}
-      
-      {tab === TABS.ADMIN && user?.isAdmin && (
-        <div className="mt-8 bg-white rounded-xl shadow-lg shadow-[#e2c9a0]/50 p-8 max-w-[950px]">
-          <h2 className="font-serif font-bold text-3xl mb-6 text-[#7b3f00]">Administrar productos</h2>
-          
-          <form onSubmit={handleFormSubmit} className="flex gap-3.5 items-center mb-8 flex-wrap">
-            <input 
-              type="text" 
-              name="name" 
-              value={form.name} 
-              onChange={handleFormChange} 
-              placeholder="Nombre" 
-              required 
-              className="flex-1 basis-[160px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
-            />
-            <input 
-              type="text" 
-              name="description" 
-              value={form.description} 
-              onChange={handleFormChange} 
-              placeholder="Descripción" 
-              required 
-              className="flex-2 basis-[260px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
-            />
-            <input 
-              type="number" 
-              name="price" 
-              value={form.price} 
-              onChange={handleFormChange} 
-              placeholder="Precio" 
-              required 
-              className="flex-none basis-[100px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
-            />
-            <input 
-              type="text" 
-              name="image" 
-              value={form.image} 
-              onChange={handleFormChange} 
-              placeholder="URL Imagen" 
-              className="flex-2 basis-[240px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
-            />
+      {/* Contenido */}
+      <div className="relative z-10">
+        <div className="flex mb-6">
+        
+          {user?.isAdmin && 
             <button 
-              type="submit" 
-              className="py-3 px-6 bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md font-bold text-base cursor-pointer h-12 hover:bg-[#6a3500] transition-colors"
+              onClick={() => handleTab(TABS.ADMIN)} 
+              className={`${tab === TABS.ADMIN ? 'font-bold' : 'font-normal'} hover:text-[#7b3f00]`}
             >
-              {editing ? 'Actualizar' : 'Crear'}
+              Administrar
             </button>
-            {editing && 
-              <button 
-                type="button" 
-                onClick={() => {
-                  setEditing(null);
-                  setForm({name:'',description:'',price:'',image:''});
-                }} 
-                className="py-3 px-4.5 bg-gray-200 text-[#7b3f00] border-none rounded-md font-bold text-base cursor-pointer h-12 hover:bg-gray-300 transition-colors"
-              >
-                Cancelar
-              </button>
-            }
-          </form>
-          
+          }
+        </div>
+        
+        {tab === TABS.USER && (
           <div className="flex flex-wrap">
             {products.map(prod => (
-              <ProductCard key={prod._id} product={prod} isAdmin={true} onEdit={handleEdit} onDelete={handleDelete} />
+              <ProductCard key={prod._id} product={prod} isAdmin={false} />
             ))}
           </div>
-        </div>
-      )}
+        )}
+        
+        {tab === TABS.ADMIN && user?.isAdmin && (
+          <div className="mt-8 bg-white rounded-xl shadow-lg shadow-[#e2c9a0]/50 p-8 max-w-[950px]">
+            <h2 className="font-serif font-bold text-3xl mb-6 text-[#7b3f00]">Administrar productos</h2>
+            
+            <form onSubmit={handleFormSubmit} className="flex gap-3.5 items-center mb-8 flex-wrap">
+              <input 
+                type="text" 
+                name="name" 
+                value={form.name} 
+                onChange={handleFormChange} 
+                placeholder="Nombre" 
+                required 
+                className="flex-1 basis-[160px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+              />
+              <input 
+                type="text" 
+                name="description" 
+                value={form.description} 
+                onChange={handleFormChange} 
+                placeholder="Descripción" 
+                required 
+                className="flex-2 basis-[260px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+              />
+              <input 
+                type="number" 
+                name="price" 
+                value={form.price} 
+                onChange={handleFormChange} 
+                placeholder="Precio" 
+                required 
+                className="flex-none basis-[100px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+              />
+              <input 
+                type="text" 
+                name="image" 
+                value={form.image} 
+                onChange={handleFormChange} 
+                placeholder="URL Imagen" 
+                className="flex-2 basis-[240px] p-3 rounded-md border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-[#7b3f00] focus:border-[#7b3f00]" 
+              />
+              <button 
+                type="submit" 
+                className="py-3 px-6 bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md font-bold text-base cursor-pointer h-12 hover:bg-[#6a3500] transition-colors"
+              >
+                {editing ? 'Actualizar' : 'Crear'}
+              </button>
+              {editing && 
+                <button 
+                  type="button" 
+                  onClick={() => {
+                    setEditing(null);
+                    setForm({name:'',description:'',price:'',image:''});
+                  }} 
+                  className="py-3 px-4.5 bg-gray-200 text-[#7731c6] border-none rounded-md font-bold text-base cursor-pointer h-12 hover:bg-gray-300 transition-colors"
+                >
+                  Cancelar
+                </button>
+              }
+            </form>
+            
+            <div className="flex flex-wrap">
+              {products.map(prod => (
+                <ProductCard key={prod._id} product={prod} isAdmin={true} onEdit={handleEdit} onDelete={handleDelete} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-gradient-to-r from-purple-500 to-purple-900 text-white py-6 mt-12">
+    <footer className="w-full bg-gradient-to-r from-purple-500 to-purple-900 text-white py-6 ">
       {/* Versión móvil y tablet pequeña - Apilada verticalmente */}
       <div className="lg:hidden container mx-auto px-4 flex flex-col items-center gap-4 py-2">
         <div>
