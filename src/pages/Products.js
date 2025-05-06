@@ -64,7 +64,7 @@ export default function Products() {
   return (
     <div className="min-h-screen relative" style={{backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed'}}>
       {/* Overlay para difuminar la imagen */}
-      <div className="absolute inset-0 sm:backdrop-blur-[1px] md:backdrop-blur-[1px] lg:bg-opacity-20 lg:backdrop-blur-[1px]"></div>
+      <div className="absolute inset-0 md:backdrop-blur-[1px] lg:bg-opacity-20 lg:backdrop-blur-[1px]"></div>
       
       {/* Contenido */}
       <div className="relative z-10 px-4 py-6">
