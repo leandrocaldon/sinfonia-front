@@ -62,12 +62,12 @@ export default function Products() {
   };
 
   return (
-    <div className="min-h-screen relative" style={{backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+    <div className="min-h-screen relative" style={{backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed'}}>
       {/* Overlay para difuminar la imagen */}
-      <div className="absolute inset-0  bg-opacity-40 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 sm:backdrop-blur-[1px] md:backdrop-blur-[1px] lg:bg-opacity-20 lg:backdrop-blur-[1px]"></div>
       
       {/* Contenido */}
-      <div className="relative z-10">
+      <div className="relative z-10 px-4 py-6">
         <div className="flex mb-6">
         
           {user?.isAdmin && 
@@ -81,7 +81,7 @@ export default function Products() {
         </div>
         
         {tab === TABS.USER && (
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap justify-center">
             {products.map(prod => (
               <ProductCard key={prod._id} product={prod} isAdmin={false} />
             ))}
@@ -89,7 +89,7 @@ export default function Products() {
         )}
         
         {tab === TABS.ADMIN && user?.isAdmin && (
-          <div className="mt-8 bg-white rounded-xl shadow-lg shadow-[#e2c9a0]/50 p-8 max-w-[950px]">
+          <div className="mt-8 bg-white rounded-xl shadow-lg shadow-[#e2c9a0]/50 p-8 max-w-[950px] mx-auto">
             <h2 className="font-serif font-bold text-3xl mb-6 text-[#7b3f00]">Administrar productos</h2>
             
             <form onSubmit={handleFormSubmit} className="flex gap-3.5 items-center mb-8 flex-wrap">
@@ -148,7 +148,7 @@ export default function Products() {
               }
             </form>
             
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap justify-center">
               {products.map(prod => (
                 <ProductCard key={prod._id} product={prod} isAdmin={true} onEdit={handleEdit} onDelete={handleDelete} />
               ))}
