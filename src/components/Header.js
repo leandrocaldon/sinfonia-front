@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import MobileMenu from './MobileMenu';
 
 export default function Header() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || 'null');
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 700);
-  const [animateMenu, setAnimateMenu] = useState(false);
+
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -33,14 +34,7 @@ export default function Header() {
     };
   }, [lastScrollY]);
 
-  // Animación para el menú lateral
-  useEffect(() => {
-    if (menuOpen) {
-      setAnimateMenu(true);
-    } else {
-      setTimeout(() => setAnimateMenu(false), 350);
-    }
-  }, [menuOpen]);
+
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -48,11 +42,7 @@ export default function Header() {
     window.location = '/login';
   };
 
-  // Navegación y cierre de menú
-  const handleNav = (path) => {
-    navigate(path);
-    setMenuOpen(false);
-  };
+
 
   return (
     <header className={`w-full bg-gradient-to-r from-purple-500 to-purple-900 text-white shadow-md sticky top-0 z-50 flex items-center justify-between min-h-[100px] transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'}`}>
@@ -85,28 +75,8 @@ export default function Header() {
         >
           <span className="text-3xl text-white">&#9776;</span>
         </button>
-        {/* Menú lateral móvil con animación y enlaces */}
-        {(menuOpen || animateMenu) && isMobile && (
-          <div className={`fixed top-0 right-0 w-60 h-screen bg-gradient-to-r from-purple-300 to-purple-400 shadow-lg z-50 flex flex-col items-start p-6 transition-transform duration-350 ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-            <button 
-              onClick={()=>setMenuOpen(false)} 
-              className="self-end bg-transparent border-none text-3xl cursor-pointer text-white"
-            >
-              ×
-            </button>
-            <button onClick={()=>handleNav('/')} className="bg-transparent text-white border-none rounded-md py-2 px-5 font-bold cursor-pointer my-1 w-full text-left text-lg hover:bg-white/20">Inicio</button>
-            <button onClick={()=>handleNav('/')} className="bg-transparent text-white border-none rounded-md py-2 px-5 font-bold cursor-pointer my-1 w-full text-left text-lg hover:bg-white/20">Productos</button>
-            <button onClick={()=>handleNav('/contact')} className="bg-transparent text-white border-none rounded-md py-2 px-5 font-bold cursor-pointer my-1 w-full text-left text-lg hover:bg-white/20">Contacto</button>
-            {user && user.isAdmin && (
-              <button onClick={()=>handleNav('/admin/contact-messages')} className="bg-transparent text-white border-none rounded-md py-2 px-5 font-bold cursor-pointer my-1 w-full text-left text-lg hover:bg-white/20">Mensajes</button>
-            )}
-            <div className="border-b border-gray-200 w-full my-2"></div>
-            {!user && <button onClick={()=>handleNav('/login')} className="bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md py-2 px-5 font-semibold cursor-pointer my-2 w-full text-left hover:bg-[#6a3500]">Login</button>}
-            {!user && <button onClick={()=>handleNav('/register')} className="bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md py-2 px-5 font-semibold cursor-pointer my-2 w-full text-left hover:bg-[#6a3500]">Registro</button>}
-            {user && <span className="font-medium text-sm my-4">Hola, {user.name}{user.isAdmin && ' (admin)'}</span>}
-            {user && <button onClick={()=>{handleLogout();setMenuOpen(false);}} className="bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md py-2 px-5 font-semibold cursor-pointer my-2 w-full text-left hover:bg-[#6a3500]">Logout</button>}
-          </div>
-        )}
+        {/* Menú móvil */}
+        {isMobile && <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} user={user} handleLogout={handleLogout} />}
       </nav>
     </header>
   );
