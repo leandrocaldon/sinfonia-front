@@ -4,6 +4,7 @@ import ProductCard from '../components/ProductCard';
 import CloudinaryUploader from '../components/CloudinaryUploader';
 import ProductDataManager from '../components/ProductDataManager';
 import backgroundImage from '../assets/images/cup-coffee.jpg';
+import { getLocalProducts, addLocalProduct, updateLocalProduct, deleteLocalProduct } from '../utils/localStorageManager';
 
 const TABS = {
   USER: 'Productos',
@@ -20,9 +21,19 @@ export default function Products() {
   const [imagePreview, setImagePreview] = useState('');
 
   useEffect(() => {
+    // Cargar productos desde el servidor
     axios.get('/products')
-      .then(res => setProducts(res.data))
-      .catch(() => setProducts([]));
+      .then(res => {
+        setProducts(res.data);
+      })
+      .catch(error => {
+        console.error('Error al cargar productos desde el servidor:', error);
+        // Si hay error, cargar productos desde localStorage
+        const localProducts = getLocalProducts();
+        setProducts(localProducts);
+        console.log('Cargados productos desde almacenamiento local:', localProducts.length);
+      });
+      
     // Obtener usuario logueado
     const userData = localStorage.getItem('user');
     if (userData) setUser(JSON.parse(userData));
@@ -38,10 +49,28 @@ export default function Products() {
 
   const handleDelete = async (id) => {
     if (!window.confirm('¿Eliminar producto?')) return;
-    await axios.delete(`/products/${id}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    setProducts(products.filter(p => p._id !== id));
+    
+    try {
+      // Verificar si es un producto local (ID comienza con 'local_')
+      if (id.startsWith('local_')) {
+        // Eliminar del almacenamiento local
+        deleteLocalProduct(id);
+        setProducts(products.filter(p => p._id !== id));
+        return;
+      }
+      
+      // Eliminar del servidor
+      await axios.delete(`/products/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setProducts(products.filter(p => p._id !== id));
+    } catch (error) {
+      console.error('Error al eliminar producto:', error);
+      alert('Error al eliminar el producto. Se eliminará localmente.');
+      
+      // Si hay error, eliminar localmente
+      setProducts(products.filter(p => p._id !== id));
+    }
   };
 
   const handleFormChange = e => setForm({ ...form, [e.target.name]: e.target.value });
@@ -60,15 +89,15 @@ export default function Products() {
       return;
     }
     
+    // Preparar datos para enviar
+    const productData = {
+      name: form.name,
+      description: form.description,
+      price: form.price,
+      image: form.image
+    };
+    
     try {
-      // Preparar datos para enviar
-      const productData = {
-        name: form.name,
-        description: form.description,
-        price: form.price,
-        image: form.image
-      };
-      
       // Configurar headers
       const config = {
         headers: { Authorization: `Bearer ${token}` }
@@ -76,35 +105,51 @@ export default function Products() {
       
       let res;
       if (editing) {
-        // Actualizar producto
-        res = await axios.put(`/products/${editing}`, productData, config);
-        setProducts(products.map(p => p._id === editing ? res.data : p));
-        setEditing(null);
-        alert('Producto actualizado correctamente');
+        // Verificar si es un producto local
+        if (editing.startsWith('local_')) {
+          // Actualizar en almacenamiento local
+          const updatedProduct = updateLocalProduct(editing, productData);
+          setProducts(products.map(p => p._id === editing ? updatedProduct : p));
+          setEditing(null);
+          alert('Producto actualizado localmente');
+        } else {
+          // Actualizar en el servidor
+          try {
+            res = await axios.put(`/products/${editing}`, productData, config);
+            setProducts(products.map(p => p._id === editing ? res.data : p));
+            setEditing(null);
+            alert('Producto actualizado correctamente');
+          } catch (serverError) {
+            console.error('Error al actualizar en servidor:', serverError);
+            // Si hay error con el servidor, actualizar localmente
+            const updatedProduct = updateLocalProduct(editing, productData);
+            setProducts(products.map(p => p._id === editing ? updatedProduct : p));
+            setEditing(null);
+            alert('No se pudo conectar con el servidor. Producto actualizado localmente.');
+          }
+        }
       } else {
         // Crear producto
-        res = await axios.post('/products', productData, config);
-        setProducts([...products, res.data]);
-        alert('Producto creado correctamente');
+        try {
+          // Intentar crear en el servidor
+          res = await axios.post('/products', productData, config);
+          setProducts([...products, res.data]);
+          alert('Producto creado correctamente');
+        } catch (serverError) {
+          console.error('Error al crear en servidor:', serverError);
+          // Si hay error con el servidor, crear localmente
+          const newProduct = addLocalProduct(productData);
+          setProducts([newProduct, ...products]);
+          alert('No se pudo conectar con el servidor. Producto guardado localmente.');
+        }
       }
       
       // Limpiar formulario
       setForm({ name: '', description: '', price: '', image: '' });
       setImagePreview('');
     } catch (error) {
-      console.error('Error al guardar producto:', error);
-      
-      // Mensaje de error más específico
-      if (error.response) {
-        // El servidor respondió con un código de error
-        alert(`Error ${error.response.status}: ${error.response.data.message || 'Error al procesar la solicitud'}`);
-      } else if (error.request) {
-        // La solicitud se hizo pero no se recibió respuesta
-        alert('No se pudo conectar con el servidor. Verifica tu conexión a internet o que el servidor esté en funcionamiento.');
-      } else {
-        // Error al configurar la solicitud
-        alert('Error al guardar el producto: ' + error.message);
-      }
+      console.error('Error general al guardar producto:', error);
+      alert('Error al procesar el producto: ' + error.message);
     }
   };
 
@@ -137,6 +182,19 @@ export default function Products() {
         
         {tab === TABS.ADMIN && user?.isAdmin && (
           <div className="mt-8 bg-white rounded-xl shadow-lg shadow-[#e2c9a0]/50 p-8 max-w-[950px] mx-auto">
+            <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+              <h3 className="text-xl font-bold text-[#7b3f00] mb-3">Modo de trabajo</h3>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-sm">Estado:</span>
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${products.some(p => p.isLocal) ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
+                  {products.some(p => p.isLocal) ? 'Algunos productos guardados localmente' : 'Todos los productos sincronizados'}
+                </span>
+              </div>
+              <p className="text-sm text-gray-600 mb-3">
+                Puedes gestionar tus productos incluso cuando el servidor no esté disponible. 
+                Los cambios se guardarán localmente y podrás sincronizarlos más tarde.
+              </p>
+            </div>
             <ProductDataManager products={products} setProducts={setProducts} token={token} />
             <h2 className="font-serif font-bold text-3xl mb-6 text-[#7b3f00]">Administrar productos</h2>
             

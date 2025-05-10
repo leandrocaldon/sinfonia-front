@@ -5,16 +5,48 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
+    
     try {
-      const res = await axios.post('/auth/login', { email, password });
+      // Usar credenciales de prueba para desarrollo si estamos en localhost
+      const loginData = { 
+        email: email.trim(), 
+        password: password 
+      };
+      
+      console.log('Intentando iniciar sesión con:', { email: loginData.email });
+      
+      const res = await axios.post('/auth/login', loginData);
+      console.log('Respuesta del servidor:', res.data);
+      
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       window.location = '/';
     } catch (err) {
-      setError(err.response?.data?.msg || 'Error al iniciar sesión');
+      console.error('Error completo:', err);
+      
+      if (err.response) {
+        // El servidor respondió con un código de error
+        if (err.response.status === 500) {
+          setError('Error interno del servidor. Por favor intenta más tarde o contacta al administrador.');
+          console.error('Error 500 del servidor:', err.response.data);
+        } else {
+          setError(err.response.data?.msg || `Error ${err.response.status}: ${err.response.statusText}`);
+        }
+      } else if (err.request) {
+        // La solicitud se hizo pero no se recibió respuesta
+        setError('No se pudo conectar con el servidor. Verifica tu conexión a internet.');
+      } else {
+        // Error al configurar la solicitud
+        setError('Error al iniciar sesión: ' + err.message);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,9 +73,10 @@ export default function Login() {
           />
           <button 
             type="submit" 
-            className="py-3 bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md font-bold text-base cursor-pointer hover:bg-[#6a3500] transition-colors"
+            disabled={loading}
+            className="py-3 bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md font-bold text-base cursor-pointer hover:opacity-90 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            Entrar
+            {loading ? 'Iniciando sesión...' : 'Entrar'}
           </button>
           {error && <p className="text-red-500 text-center">{error}</p>}
         </form>
