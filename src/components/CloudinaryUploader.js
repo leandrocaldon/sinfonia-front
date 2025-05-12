@@ -2,26 +2,33 @@ import React, { useEffect, useState } from 'react';
 
 // Cloudinary Upload Widget Component
 export default function CloudinaryUploader({ onImageUploaded }) {
-  const [scriptLoaded, setScriptLoaded] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const [widgetReady, setWidgetReady] = useState(false);
   
-  // Cargar el script de Cloudinary cuando el componente se monta
+  // Verificar si el script de Cloudinary ya está cargado
   useEffect(() => {
-    if (!window.cloudinary && !scriptLoaded) {
-      const script = document.createElement('script');
-      script.src = 'https://upload-widget.cloudinary.com/global/all.js';
-      script.async = true;
-      script.onload = () => setScriptLoaded(true);
-      document.body.appendChild(script);
+    // Comprobar si cloudinary ya está disponible
+    const checkCloudinary = () => {
+      if (window.cloudinary) {
+        setWidgetReady(true);
+        return true;
+      }
+      return false;
+    };
+    
+    // Si no está disponible inmediatamente, configurar un intervalo para verificar
+    if (!checkCloudinary()) {
+      const interval = setInterval(() => {
+        if (checkCloudinary()) {
+          clearInterval(interval);
+        }
+      }, 500);
       
-      return () => {
-        document.body.removeChild(script);
-      };
-    } else {
-      setScriptLoaded(true);
+      // Limpiar el intervalo cuando el componente se desmonte
+      return () => clearInterval(interval);
     }
-  }, [scriptLoaded]);
+  }, []);
   
   const openWidget = () => {
     if (!window.cloudinary) {
@@ -97,7 +104,7 @@ export default function CloudinaryUploader({ onImageUploaded }) {
       <button
         type="button"
         onClick={openWidget}
-        disabled={!scriptLoaded || uploading}
+        disabled={!widgetReady || uploading}
         className="flex items-center justify-center px-4 py-2 bg-white rounded-md border border-gray-300 cursor-pointer hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <span className="text-base font-medium text-gray-700">
