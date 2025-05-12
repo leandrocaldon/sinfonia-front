@@ -4,7 +4,7 @@ import axios from 'axios';
 const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
 // URL del servidor de producción
-const PRODUCTION_API_URL = 'https://sinfonia-back.vercel.app/api/products';
+const PRODUCTION_API_URL = 'https://sinfonia-back.vercel.app/api/';
 
 // Configuración base de axios
 const instance = axios.create({
