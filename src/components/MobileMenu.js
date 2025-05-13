@@ -62,7 +62,7 @@ export default function MobileMenu({ menuOpen, setMenuOpen, user, handleLogout }
       )}
       <div className="border-b border-gray-200 w-full my-2"></div>
       {!user && <button onClick={() => handleNav('/login')} className="bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md py-2 px-5 font-semibold cursor-pointer my-2 w-full text-left hover:opacity-90">Login</button>}
-      {!user && <button onClick={() => handleNav('/register')} className="bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md py-2 px-5 font-semibold cursor-pointer my-2 w-full text-left hover:opacity-90">Registro</button>}
+      {/* Botón de registro eliminado para mantener solo un administrador configurado */}
       {user && <span className="font-medium text-sm my-4">Hola, {user.name}{user.isAdmin && ' (admin)'}</span>}
       {user && <button onClick={() => {handleLogout(); setMenuOpen(false);}} className="bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md py-2 px-5 font-semibold cursor-pointer my-2 w-full text-left hover:opacity-90">Logout</button>}
     </div>

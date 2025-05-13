@@ -121,41 +121,6 @@ export default function ProductDataManager({ products, setProducts, token }) {
     }, 100);
   };
 
-  return (
-    <div className="bg-white p-4 rounded-lg shadow-md mb-6">
-      <h3 className="text-xl font-bold text-[#7b3f00] mb-3">Gestión de Datos</h3>
-      
-      <div className="flex flex-wrap gap-3">
-        <button
-          onClick={handleExport}
-          className="bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md py-2 px-4 font-semibold cursor-pointer hover:opacity-90"
-        >
-          Exportar Productos
-        </button>
-        
-        <label className="bg-gradient-to-r from-purple-500 to-purple-900 text-white border-none rounded-md py-2 px-4 font-semibold cursor-pointer hover:opacity-90">
-          {importing ? 'Importando...' : 'Importar Productos'}
-          <input
-            type="file"
-            accept=".json"
-            onChange={handleImport}
-            disabled={importing}
-            className="hidden"
-          />
-        </label>
-        
-        <button
-          onClick={handleCreateTemplate}
-          className="bg-gray-200 text-[#7731c6] border-none rounded-md py-2 px-4 font-semibold cursor-pointer hover:bg-gray-300"
-        >
-          Crear Plantilla
-        </button>
-      </div>
-      
-      <p className="text-sm text-gray-600 mt-3">
-        Exporta tus productos para editarlos en tu PC y luego importarlos de nuevo.
-        La plantilla te ayuda a crear nuevos productos con el formato correcto.
-      </p>
-    </div>
-  );
+  // La sección de Gestión de Datos ha sido eliminada
+  return null; // No renderizamos nada
 }

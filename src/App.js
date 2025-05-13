@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Login from './pages/Login';
-import Register from './pages/Register';
+// Registro eliminado para mantener solo un administrador configurado
 import Products from './pages/Products';
 import Contact from './pages/Contact';
 import AdminContactMessages from './pages/AdminContactMessages';
@@ -17,7 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Products />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            {/* Ruta de registro eliminada para mantener solo un administrador configurado */}
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin/contact-messages" element={<AdminContactMessages />} />
           </Routes>

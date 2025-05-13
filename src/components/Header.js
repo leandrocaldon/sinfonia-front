@@ -64,7 +64,7 @@ export default function Header() {
             <button onClick={()=>navigate('/admin/contact-messages')} className="bg-transparent text-white border-none rounded-md py-2 px-4 font-semibold cursor-pointer text-base hover:bg-white/10">Mensajes</button>
           )}
           {!user && <button onClick={()=>navigate('/login')} className="bg-white text-[#7731c6] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Login</button>}
-          {!user && <button onClick={()=>navigate('/register')} className="bg-white text-[#7731c6] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Registro</button>}
+          {/* Botón de registro eliminado para mantener solo un administrador configurado */}
           {user && <span className="font-medium text-sm mr-2">Hola, {user.name}{user.isAdmin && ' (admin)'}</span>}
           {user && <button onClick={handleLogout} className="bg-white text-[#7731c6] border-none rounded-md py-2 px-5 font-semibold cursor-pointer hover:bg-gray-100">Logout</button>}
         </div>
